@@ -72,4 +72,4 @@ async def predict(data: InputData):
         raise HTTPException(status_code=500, detail="Prediction failed. Please check the input data.")
 
 if __name__ == '__main__':
-    uvicorn.run(app, port=8001)
+    uvicorn.run(app, port=8000)
