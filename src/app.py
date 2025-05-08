@@ -56,6 +56,7 @@ class InputData(BaseModel):
 async def root():
     return {"Welcome to our ML application."}
 
+
 @app.post('/predict')
 async def predict(data: InputData):
     """ Predict the OutletSales based on the input data """
