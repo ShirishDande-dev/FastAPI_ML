@@ -72,5 +72,20 @@ async def predict(data: InputData):
         logger.error(f"Error during prediction: {e}")
         raise HTTPException(status_code=500, detail="Prediction failed. Please check the input data.")
 
+
+@app.post('/predict_batch')
+async def predict_batch(data: list[InputData]):
+    """ Predict the Outsales based on batch input data """
+    try:
+        input_df = pd.DataFrame([item.model_dump() for item in data])
+        logger.info(f"Input features DataFrame: {input_df}")
+        model = app.state.model
+        prediction = model.predict(input_df)
+        logger.info(f"Prediction: {prediction}")
+        return {"predicted OutletSales": prediction.tolist()}
+    except Exception as e:
+        logger.error(f"Error during prediction: {e}")
+        raise HTTPException(status_code=500, detail="Prediction failed. Please check the input data.")
+
 if __name__ == '__main__':
     uvicorn.run(app, port=8000)
